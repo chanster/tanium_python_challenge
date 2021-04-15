@@ -17,7 +17,7 @@ class Post:
         else:
             return requests.get(f"{self.entrypoint}")
 
-    def add(self, title, body, user_id):
+    def add(self, user_id, title, body):
         '''POST request to posts resource'''
         headers = {
             'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ class Post:
             'userId': user_id
         }
 
-        return requests.post(self.entrypoint, json = content, header = headers)
+        return requests.post(self.entrypoint, json = content, headers = headers)
 
     def replace(self, user_id, post_id, title, body):
         '''PUT request to a specified posts resource'''
@@ -42,7 +42,7 @@ class Post:
             'userId': user_id
         }
 
-        return requests.put(self.entrypoint, json = content, header = headers)
+        return requests.put(self.entrypoint, json = content, headers = headers)
 
 
     def modify(self, post_id, user_id, title = None, body = None):
@@ -55,7 +55,7 @@ class Post:
         if title :  content['title'] = title
         if body : content['body'] = body 
 
-        return requests.patch(f"{self.entrypoint}/{post_id}", json = content, header = headers)
+        return requests.patch(f"{self.entrypoint}/{post_id}", json = content, headers = headers)
 
 
     def delete(self, post_id):

@@ -27,7 +27,7 @@ class Album:
             'userId': user_id
         }
 
-        return requests.post(self.entrypoint, json = content, header = headers)
+        return requests.post(self.entrypoint, json = content, headers = headers)
 
     def replace(self, album_id, user_id, title):
         '''PUT request to a specified posts resource'''
@@ -39,7 +39,7 @@ class Album:
             'userId': user_id
         }
 
-        return requests.put(self.entrypoint, json = content, header = headers)
+        return requests.put(self.entrypoint, json = content, headers = headers)
 
 
     def modify(self, album_id, user_id = None, title = None):
@@ -51,7 +51,7 @@ class Album:
         if user_id : content['userId'] =  user_id
         if title :  content['title'] = title
 
-        return requests.patch(f"{self.entrypoint}/{album_id}", json = content, header = headers)
+        return requests.patch(f"{self.entrypoint}/{album_id}", json = content, headers = headers)
 
 
     def delete(self, album_id):

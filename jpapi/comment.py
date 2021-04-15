@@ -29,7 +29,7 @@ class Comment:
             'body': body
         }
 
-        return requests.post(self.entrypoint, json = content, header = headers)
+        return requests.post(self.entrypoint, json = content, headers = headers)
 
     def replace(self, comment_id, post_id, name, email, body):
         '''PUT request to a specified posts resource'''
@@ -43,7 +43,7 @@ class Comment:
             'body': body
         }
 
-        return requests.put(self.entrypoint, json = content, header = headers)
+        return requests.put(self.entrypoint, json = content, headers = headers)
 
     def modify(self, comment_id, post_id = None, name = None, email = None, body = None):
         '''PATCH request to a specified posts resource'''
@@ -56,7 +56,7 @@ class Comment:
         if email : content['email'] = email
         if body : content['body'] = body 
 
-        return requests.patch(f"{self.entrypoint}/{comment_id}", json = content, header = headers)
+        return requests.patch(f"{self.entrypoint}/{comment_id}", json = content, headers = headers)
 
     def delete(self, comment_id):
         '''DELETE request to a specified post resource'''
