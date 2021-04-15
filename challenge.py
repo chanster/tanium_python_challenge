@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from jpapi import Client
 import json
 import datetime
