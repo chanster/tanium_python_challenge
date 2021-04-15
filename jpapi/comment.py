@@ -43,7 +43,7 @@ class Comment:
             'body': body
         }
 
-        return requests.put(self.entrypoint, json = content, headers = headers)
+        return requests.put(f"{self.entrypoint}/{comment_id}", json = content, headers = headers)
 
     def modify(self, comment_id, post_id = None, name = None, email = None, body = None):
         '''PATCH request to a specified posts resource'''
