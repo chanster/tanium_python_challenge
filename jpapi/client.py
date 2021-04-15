@@ -2,7 +2,7 @@ from .post import Post
 from .comment import Comment
 from .album import Album
 
-class ApiClient:
+class Client:
 
     def __init__(self, entrypoint = "https://jsonplaceholder.typicode.com"):
         self.entrypoint = entrypoint

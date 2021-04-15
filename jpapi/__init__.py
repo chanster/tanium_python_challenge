@@ -1,4 +1,4 @@
-from .apiclient import ApiClient
+from .client import Client
 
 __all__ = [
     'ApiCLient'
