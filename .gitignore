@@ -9,3 +9,9 @@ include
 lib
 lib64
 share
+
+# vscode
+.vscode/*
+
+# Local History for Visual Studio Code
+.history/
