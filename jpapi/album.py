@@ -58,5 +58,6 @@ class Album:
         '''DELETE request to a specified post resource'''
         return requests.delete(f"{self.entrypoint}/{album_id}")
 
-    def search(self, filter):
+    def filter(self, filters):
         pass
+    

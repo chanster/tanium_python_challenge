@@ -62,5 +62,5 @@ class Comment:
         '''DELETE request to a specified post resource'''
         return requests.delete(f"{self.entrypoint}/{comment_id}")
 
-    def search(self, filter):
+    def filter(self, filters):
         pass
