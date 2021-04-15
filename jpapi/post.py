@@ -30,19 +30,18 @@ class Post:
 
         return requests.post(self.entrypoint, json = content, headers = headers)
 
-    def replace(self, user_id, post_id, title, body):
+    def replace(self, post_id, user_id, title, body):
         '''PUT request to a specified posts resource'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
         content = {
-            'id': post_id,
             'title': title,
             'body': body,
             'userId': user_id
         }
 
-        return requests.put(self.entrypoint, json = content, headers = headers)
+        return requests.put(f"{self.entrypoint}/{post_id}", json = content, headers = headers)
 
 
     def modify(self, post_id, user_id, title = None, body = None):
@@ -62,5 +61,5 @@ class Post:
         '''DELETE request to a specified post resource'''
         return requests.delete(f"{self.entrypoint}/{post_id}")
 
-    def search(self, filter):
+    def filter(self, filters):
         pass
