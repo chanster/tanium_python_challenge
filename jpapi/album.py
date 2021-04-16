@@ -39,7 +39,7 @@ class Album:
             'userId': user_id
         }
 
-        return requests.put(self.entrypoint, json = content, headers = headers)
+        return requests.put(f"{self.entrypoint}/{album_id}", json = content, headers = headers)
 
 
     def modify(self, album_id, user_id = None, title = None):
