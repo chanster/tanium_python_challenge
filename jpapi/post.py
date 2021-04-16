@@ -12,10 +12,14 @@ class Post:
         '''GET request to posts resource'''
         # get all posts of no post id defined
         if post_id:
-            return requests.get(f"{self.entrypoint}/{post_id}")
+            response = requests.get(f"{self.entrypoint}/{post_id}")
+            response.raise_for_status()
         # get specific post id
         else:
-            return requests.get(f"{self.entrypoint}")
+            response = requests.get(f"{self.entrypoint}")
+            response.raise_for_status()
+        
+        return response
 
     def add(self, user_id, title, body):
         '''POST request to posts resource'''
@@ -28,7 +32,10 @@ class Post:
             'userId': user_id
         }
 
-        return requests.post(self.entrypoint, json = content, headers = headers)
+        response = requests.post(self.entrypoint, json = content, headers = headers)
+        response.raise_for_status()
+
+        return response
 
     def replace(self, post_id, user_id, title, body):
         '''PUT request to a specified posts resource'''
@@ -41,7 +48,10 @@ class Post:
             'userId': user_id
         }
 
-        return requests.put(f"{self.entrypoint}/{post_id}", json = content, headers = headers)
+        response = requests.put(f"{self.entrypoint}/{post_id}", json = content, headers = headers)
+        response.raise_for_status()
+
+        return response
 
 
     def modify(self, post_id, user_id, title = None, body = None):
@@ -54,12 +64,18 @@ class Post:
         if title :  content['title'] = title
         if body : content['body'] = body 
 
-        return requests.patch(f"{self.entrypoint}/{post_id}", json = content, headers = headers)
+        response = requests.patch(f"{self.entrypoint}/{post_id}", json = content, headers = headers)
+        response.raise_for_status()
+
+        return response
 
 
     def delete(self, post_id):
         '''DELETE request to a specified post resource'''
-        return requests.delete(f"{self.entrypoint}/{post_id}")
+        response = requests.delete(f"{self.entrypoint}/{post_id}")
+        response.raise_for_status()
+
+        return response
 
     def filter(self, filters):
         pass

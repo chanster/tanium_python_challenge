@@ -9,7 +9,6 @@ challenge = Client()
 # 1 Print the value of the title for post 99
 try: 
     response = challenge.posts.get(99)
-    response.raise_for_status
     json_response = response.json()
     print(json_response['title'])
 except Exception as err:
@@ -18,7 +17,6 @@ except Exception as err:
 # 2 Inject a field call time into the results for post number 100 and print while JSON record
 try:
     response = challenge.posts.get(100)
-    response.raise_for_status
     json_response = response.json()
     json_response['time'] = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     print(json_response)

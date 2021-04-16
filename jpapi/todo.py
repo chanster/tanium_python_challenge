@@ -27,7 +27,10 @@ class Todo:
             'completed': completed
         }
 
-        return requests.post(self.entrypoint, json = content, headers = headers)
+        response = requests.post(self.entrypoint, json = content, headers = headers)
+        response.raise_for_status()
+
+        return response
 
     def replace(self, todo_id, title, completed):
         '''PUT request to a specified todos resource'''
@@ -39,8 +42,10 @@ class Todo:
             'completed': completed
         }
 
-        return requests.put(f"{self.entrypoint}/{todo_id}", json = content, headers = headers)
+        response = requests.put(f"{self.entrypoint}/{todo_id}", json = content, headers = headers)
+        response.raise_for_status()
 
+        return response
 
     def modify(self, todo_id, title = None, completed = None):
         '''PATCH request to a specified todos resource'''
@@ -52,8 +57,10 @@ class Todo:
         # modify if either True or False
         if completed != None : content['body'] = completed
 
-        return requests.patch(f"{self.entrypoint}/{todo_id}", json = content, headers = headers)
+        response = requests.patch(f"{self.entrypoint}/{todo_id}", json = content, headers = headers)
+        response.raise_for_status()
 
+        return response
 
     def delete(self, todo_id ):
         '''DELETE request to a specified post resource'''

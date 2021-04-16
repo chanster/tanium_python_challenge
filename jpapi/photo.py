@@ -12,10 +12,14 @@ class Photo:
         '''GET request to photos resource'''
         # get all photos if no photos id defined
         if photo_id:
-            return requests.get(f"{self.entrypoint}/{photo_id}")
+            response = requests.get(f"{self.entrypoint}/{photo_id}")
+            response.raise_for_status()
         # get specific photo id
         else:
-            return requests.get(f"{self.entrypoint}")
+            response = requests.get(f"{self.entrypoint}")
+            response.raise_for_status()
+
+        return response
 
     def add(self, album_id, title, url, thumbnail):
         '''POST request to photos resource'''
@@ -29,7 +33,10 @@ class Photo:
             'thumbnail': thumbnail
         }
 
-        return requests.post(self.entrypoint, json = content, headers = headers)
+        response = requests.post(self.entrypoint, json = content, headers = headers)
+        response.raise_for_status()
+
+        return response
 
     def replace(self, photo_id, album_id, title, url, thumbnail):
         '''PUT request to a specified photos resource'''
@@ -43,7 +50,10 @@ class Photo:
             'thumbnail': thumbnail
         }
 
-        return requests.put(f"{self.entrypoint}/{photo_id}", json = content, headers = headers)
+        response = requests.put(f"{self.entrypoint}/{photo_id}", json = content, headers = headers)
+        response.raise_for_status()
+
+        return response
 
 
     def modify(self, photo_id, album_id = None, title = None, url = None, thumbnail = None):
@@ -57,12 +67,18 @@ class Photo:
         if url : content['body'] = url
         if thumbnail : content['thumbnail'] = thumbnail 
 
-        return requests.patch(f"{self.entrypoint}/{photo_id}", json = content, headers = headers)
+        response = requests.patch(f"{self.entrypoint}/{photo_id}", json = content, headers = headers)
+        response.raise_for_status()
+
+        return response
 
 
     def delete(self, photo_id):
         '''DELETE request to a specified photos resource'''
-        return requests.delete(f"{self.entrypoint}/{photo_id}")
+        response = requests.delete(f"{self.entrypoint}/{photo_id}")
+        response.raise_for_status()
+
+        return response
 
     def filter(self, filters):
         pass
