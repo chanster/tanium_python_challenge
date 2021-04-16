@@ -22,7 +22,7 @@ class TestPost():
         except err.HTTPError:
             assert True
 
-    def test_add_valid_posts(self):
+    def test_add_valid_post(self):
         posts = Post("http://jsonplaceholder.typicode.com")
         response = posts.add(1, 'This is a Test', 'A test to add an item to the posts resource')
         assert response.status_code == 201
@@ -45,12 +45,12 @@ class TestPost():
         response = posts.modify(1, user_id = 7)
         assert response.status_code == 200
 
-    def delete_valid_post(self):
+    def test_delete_valid_post(self):
         posts =  Post("http://jsonplaceholder.typicode.com")
         response = posts.delete(1)
         assert response.status_code == 200
 
-    def delete_invalid_post(self):
+    def test_delete_invalid_post(self):
         try:
             posts = Post("http://jsonplaceholder.typicode.com")
             response = posts.delete(1000)
