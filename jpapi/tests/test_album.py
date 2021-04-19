@@ -1,7 +1,7 @@
 from requests import exceptions as err
 from ..album import Album
-import requests_mock
 import pytest
+import requests_mock
 
 
 mock_data = [
