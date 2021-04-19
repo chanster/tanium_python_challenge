@@ -1,3 +1,4 @@
+from urllib.parse import urlencode
 import requests
 
 class Post:
@@ -83,5 +84,12 @@ class Post:
 
         return response
 
-    def filter(self, filters):
-        pass
+    def filter(self, user_id = None):
+        '''filter posts'''
+        filters = {}
+        if user_id : filters['userId'] = user_id
+
+        response = requests.get(f"{self.entrypoint}?{urlencode(filters)}")
+        response.raise_for_status()
+
+        return response

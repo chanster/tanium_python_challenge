@@ -1,3 +1,4 @@
+from urllib.parse import urlencode
 import requests
 
 class Todo:
@@ -66,5 +67,13 @@ class Todo:
         '''DELETE request to a specified post resource'''
         return requests.delete(f"{self.entrypoint}/{todo_id}")
 
-    def filter(self, filters):
-        pass
+    def filter(self, user_id = None, completed = None):
+        filters = {}
+        if user_id : filters['userId'] = user_id
+        # convert Boolean to lowercase string to match query
+        if completed != None : filters['completed'] = ''.format(completed).lower()
+        
+        response = requests.delete(f"{self.entrypoint}?{urlencode(filters)}")
+        response.raise_for_status()
+
+        return response

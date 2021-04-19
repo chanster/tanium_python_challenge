@@ -1,3 +1,4 @@
+from urllib.parse import urlencode
 import requests
 
 class Photo:
@@ -80,5 +81,11 @@ class Photo:
 
         return response
 
-    def filter(self, filters):
-        pass
+    def filter(self, album_id = None):
+        filters = {}
+        if album_id : filters['albumId'] = album_id
+
+        response = requests.get(f"{self.entrypoint}?{urlencode(filters)}")
+        response.raise_for_status()
+
+        return response

@@ -1,3 +1,4 @@
+from urllib.parse import urlencode
 import requests
 
 class Comment:
@@ -62,5 +63,13 @@ class Comment:
         '''DELETE request to a specified post resource'''
         return requests.delete(f"{self.entrypoint}/{comment_id}")
 
-    def filter(self, filters):
-        pass
+    def filter(self, comment_id, user_id = None, post_id = None, email = None):
+        filters = {}
+        if post_id : filters['postId'] = post_id
+        if user_id : filters['userId'] = user_id
+        if email : filters['email'] = email
+        
+        response = requests.delete(f"{self.entrypoint}/{comment_id}?{urlencode(filters)}")
+        response.raise_for_status()
+
+        return response

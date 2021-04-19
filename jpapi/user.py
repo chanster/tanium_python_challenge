@@ -1,3 +1,4 @@
+from urllib.parse import urlencode
 import requests
 
 class User:
@@ -110,5 +111,14 @@ class User:
 
         return response
 
-    def filter(self, filters):
-        pass
+    def filter(self, user_id, album_id = None, todo_id = None, post_id = None):
+        '''filter a user's reources'''
+        filters = {}
+        if album_id : filters['albumId'] = album_id
+        if todo_id : filters['todoId'] = todo_id
+        if post_id : filters['postId'] = post_id
+        
+        response = requests.delete(f"{self.entrypoint}/{user_id}?{urlencode(filters)}")
+        response.raise_for_status()
+
+        return response
