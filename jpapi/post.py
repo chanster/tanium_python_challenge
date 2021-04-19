@@ -22,7 +22,7 @@ class Post:
         return response
 
     def get_comments(self, post_id):
-        '''get comments of a speicifc post'''
+        '''get comments of a specifc post'''
         response = requests.get(f"{self.entrypoint}/{post_id}/comments")
         response.raise_for_status()
 
@@ -92,7 +92,7 @@ class Post:
         return response
 
     def delete(self, post_id):
-        '''delete a specific post'''
+        '''delete a post'''
         response = requests.delete(f"{self.entrypoint}/{post_id}")
         response.raise_for_status()
 
@@ -103,7 +103,7 @@ class Post:
         filters = {}
         if user_id: filters['userId'] = user_id
 
-        response = requests.get(f"{self.entrypoint}?{urlencode(filters)}")
+        response = requests.get(f"{self.entrypoint}", params = urlencode(filters))
         response.raise_for_status()
 
         return response

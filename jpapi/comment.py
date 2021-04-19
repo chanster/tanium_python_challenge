@@ -85,7 +85,7 @@ class Comment:
         if user_id : filters['userId'] = user_id
         if email : filters['email'] = email
         
-        response = requests.delete(f"{self.entrypoint}/{comment_id}?{urlencode(filters)}")
+        response = requests.delete(f"{self.entrypoint}/{comment_id}", params = urlencode(filters))
         response.raise_for_status()
 
         return response

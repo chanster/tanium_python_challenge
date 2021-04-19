@@ -9,7 +9,7 @@ class Todo:
         self.entrypoint = f"{entrypoint}/todos"
 
     def get(self, todo_id  = None):
-        '''GET request to todos resource'''
+        '''get all or specific todo'''
         # get all todos of no post id defined
         if todo_id :
             response = requests.get(f"{self.entrypoint}/{todo_id}")
@@ -22,7 +22,7 @@ class Todo:
         return response
 
     def add(self, title, completed = False):
-        '''POST request to todos resource'''
+        '''add a todo'''
         headers = {
             'Content-Type': 'application/json'
         }
@@ -37,7 +37,7 @@ class Todo:
         return response
 
     def replace(self, todo_id, user_id, title, completed):
-        '''PUT request to a specified todos resource'''
+        '''replace a todo'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
@@ -53,7 +53,7 @@ class Todo:
         return response
 
     def modify(self, todo_id, user_id = None, title = None, completed = None):
-        '''PATCH request to a specified todos resource'''
+        '''modify a todo'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
@@ -82,7 +82,7 @@ class Todo:
         # convert Boolean to lowercase string to match query
         if completed != None : filters['completed'] = ''.format(completed).lower()
 
-        response = requests.delete(f"{self.entrypoint}?{urlencode(filters)}")
+        response = requests.delete(f"{self.entrypoint}", params = urlencode(filters))
         response.raise_for_status()
 
         return response

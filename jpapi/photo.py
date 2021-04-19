@@ -39,7 +39,7 @@ class Photo:
         return response
 
     def replace(self, photo_id, album_id, title, url, thumbnail):
-        '''replace a specific photos resource'''
+        '''replace a specific photo'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
@@ -57,7 +57,7 @@ class Photo:
 
 
     def modify(self, photo_id, album_id = None, title = None, url = None, thumbnail = None):
-        '''modify a specific photos resource'''
+        '''modify a specific photo'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
@@ -74,7 +74,7 @@ class Photo:
 
 
     def delete(self, photo_id):
-        '''delete a specific photos resource'''
+        '''delete a specific photo'''
         response = requests.delete(f"{self.entrypoint}/{photo_id}")
         response.raise_for_status()
 
@@ -85,7 +85,7 @@ class Photo:
         filters = {}
         if album_id : filters['albumId'] = album_id
 
-        response = requests.get(f"{self.entrypoint}?{urlencode(filters)}")
+        response = requests.get(f"{self.entrypoint}", params = urlencode(filters))
         response.raise_for_status()
 
         return response

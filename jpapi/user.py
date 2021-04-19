@@ -118,7 +118,7 @@ class User:
         if todo_id : filters['todoId'] = todo_id
         if post_id : filters['postId'] = post_id
 
-        response = requests.delete(f"{self.entrypoint}/{user_id}?{urlencode(filters)}")
+        response = requests.delete(f"{self.entrypoint}/{user_id}", params = urlencode(filters))
         response.raise_for_status()
 
         return response
