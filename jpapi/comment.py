@@ -13,10 +13,14 @@ class Comment:
         '''GET request to posts resource'''
         # get all posts of no post id defined
         if comment_id:
-            return requests.get(f"{self.entrypoint}/{comment_id}")
+            response = requests.get(f"{self.entrypoint}/{comment_id}")
         # get specific post id
         else:
-            return requests.get(f"{self.entrypoint}")
+            response = requests.get(f"{self.entrypoint}")
+        
+        response.raise_for_status()
+
+        return response
 
     def add(self, post_id, name, email, body):
         '''POST request to posts resource'''
@@ -30,7 +34,10 @@ class Comment:
             'body': body
         }
 
-        return requests.post(self.entrypoint, json = content, headers = headers)
+        response = requests.post(self.entrypoint, json = content, headers = headers)
+        response.raise_for_status()
+
+        return response
 
     def replace(self, comment_id, post_id, name, email, body):
         '''PUT request to a specified posts resource'''
@@ -44,10 +51,13 @@ class Comment:
             'body': body
         }
 
-        return requests.put(f"{self.entrypoint}/{comment_id}", json = content, headers = headers)
+        response = requests.put(f"{self.entrypoint}/{comment_id}", json = content, headers = headers)
+        response.raise_for_status()
+
+        return response
 
     def modify(self, comment_id, post_id = None, name = None, email = None, body = None):
-        '''PATCH request to a specified posts resource'''
+        '''modify a comment'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
@@ -57,11 +67,17 @@ class Comment:
         if email : content['email'] = email
         if body : content['body'] = body 
 
-        return requests.patch(f"{self.entrypoint}/{comment_id}", json = content, headers = headers)
+        response = requests.patch(f"{self.entrypoint}/{comment_id}", json = content, headers = headers)
+        response.raise_for_status()
+
+        return response
 
     def delete(self, comment_id):
         '''DELETE request to a specified post resource'''
-        return requests.delete(f"{self.entrypoint}/{comment_id}")
+        response = requests.delete(f"{self.entrypoint}/{comment_id}")
+        response.raise_for_status()
+
+        return response
 
     def filter(self, comment_id, user_id = None, post_id = None, email = None):
         filters = {}
