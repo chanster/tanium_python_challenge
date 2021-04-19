@@ -22,6 +22,13 @@ class Post:
         
         return response
 
+    def get_comments(self, post_id):
+        '''get comments of a speicifc post'''
+        response = requests.get(f"{self.entrypoint}/{post_id}/comments")
+        response.raise_for_status()
+        
+        return response
+
     def add(self, user_id, title, body):
         '''add a new post'''
         headers = {
