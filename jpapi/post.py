@@ -9,12 +9,13 @@ class Post:
         print(f"Entrypoint: {entrypoint}")
 
     def get(self, post_id = None):
-        '''GET request to posts resource'''
-        # get all posts of no post id defined
+        '''get specific post or all posts'''
+        # get specific post id
         if post_id:
             response = requests.get(f"{self.entrypoint}/{post_id}")
             response.raise_for_status()
-        # get specific post id
+        
+        # get all posts of no post id defined
         else:
             response = requests.get(f"{self.entrypoint}")
             response.raise_for_status()
@@ -22,7 +23,7 @@ class Post:
         return response
 
     def add(self, user_id, title, body):
-        '''POST request to posts resource'''
+        '''add a new post'''
         headers = {
             'Content-Type': 'application/json'
         }
@@ -38,7 +39,7 @@ class Post:
         return response
 
     def replace(self, post_id, user_id, title, body):
-        '''PUT request to a specified posts resource'''
+        '''completely replace a post'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
@@ -53,9 +54,8 @@ class Post:
 
         return response
 
-
     def modify(self, post_id, user_id, title = None, body = None):
-        '''PATCH request to a specified posts resource'''
+        '''modify parts of a post'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
@@ -69,9 +69,8 @@ class Post:
 
         return response
 
-
     def delete(self, post_id):
-        '''DELETE request to a specified post resource'''
+        '''delete a specific post'''
         response = requests.delete(f"{self.entrypoint}/{post_id}")
         response.raise_for_status()
 
