@@ -78,14 +78,14 @@ class Comment:
 
         return response
 
-    def filter(self, comment_id, user_id = None, post_id = None, email = None):
+    def filter(self, user_id = None, post_id = None, email = None):
         '''filter comments'''
         filters = {}
         if post_id : filters['postId'] = post_id
         if user_id : filters['userId'] = user_id
         if email : filters['email'] = email
         
-        response = requests.delete(f"{self.entrypoint}/{comment_id}", params = urlencode(filters))
+        response = requests.get(f"{self.entrypoint}", params = urlencode(filters))
         response.raise_for_status()
 
         return response

@@ -82,7 +82,7 @@ class Todo:
         # convert Boolean to lowercase string to match query
         if completed != None : filters['completed'] = ''.format(completed).lower()
 
-        response = requests.delete(f"{self.entrypoint}", params = urlencode(filters))
+        response = requests.get(f"{self.entrypoint}", params = urlencode(filters))
         response.raise_for_status()
 
         return response
