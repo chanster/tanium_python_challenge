@@ -6,7 +6,7 @@ class Album:
         self.entrypoint = f"{entrypoint}/albums"
 
     if __name__ == "__main__":
-        print(f"entrypoint: {entrypoint}")
+        print(f"entrypoint: {entrypoint}/albums")
 
     def get(self, album_id = None):
         '''GET request to posts resource'''
