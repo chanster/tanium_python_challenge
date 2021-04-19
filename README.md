@@ -3,7 +3,7 @@
 ## Running Challenge
 
 ```
-./challenge.py
+python3 challenge.py
 ```
 
 ## Running Tests
@@ -11,5 +11,5 @@
 Tests are built against `pytest`.
 
 ```
-pytest
+python3 -m pytest
 ```
