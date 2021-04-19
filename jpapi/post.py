@@ -62,7 +62,7 @@ class Post:
 
         return response
 
-    def modify(self, post_id, user_id, title = None, body = None):
+    def modify(self, post_id, user_id = None, title = None, body = None):
         '''modify parts of a post'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'

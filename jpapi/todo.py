@@ -13,10 +13,14 @@ class Todo:
         '''GET request to todos resource'''
         # get all todos of no post id defined
         if todo_id :
-            return requests.get(f"{self.entrypoint}/{todo_id}")
+            response = requests.get(f"{self.entrypoint}/{todo_id}")
         # get specific post id
         else:
-            return requests.get(f"{self.entrypoint}")
+            response = requests.get(f"{self.entrypoint}")
+
+        response.raise_for_status()
+
+        return response
 
     def add(self, title, completed = False):
         '''POST request to todos resource'''
@@ -33,12 +37,13 @@ class Todo:
 
         return response
 
-    def replace(self, todo_id, title, completed):
+    def replace(self, todo_id, user_id, title, completed):
         '''PUT request to a specified todos resource'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
         content = {
+            'userId': user_id,
             'title': title,
             'completed': completed
         }
@@ -48,12 +53,13 @@ class Todo:
 
         return response
 
-    def modify(self, todo_id, title = None, completed = None):
+    def modify(self, todo_id, user_id = None, title = None, completed = None):
         '''PATCH request to a specified todos resource'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
         content = {}
+        if user_id :  content['userId'] = user_id
         if title :  content['title'] = title
         # modify if either True or False
         if completed != None : content['body'] = completed
@@ -65,7 +71,10 @@ class Todo:
 
     def delete(self, todo_id ):
         '''DELETE request to a specified post resource'''
-        return requests.delete(f"{self.entrypoint}/{todo_id}")
+        response = requests.delete(f"{self.entrypoint}/{todo_id}")
+        response.raise_for_status()
+
+        return response
 
     def filter(self, user_id = None, completed = None):
         filters = {}
