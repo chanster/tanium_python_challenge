@@ -17,6 +17,12 @@ class Album:
         else:
             return requests.get(f"{self.entrypoint}")
 
+    def get_photos(self, album_id):
+        response = requests.get(f"{self.entrypoint}/{album_id}/photos")
+        response.raise_for_status()
+
+        return response
+
     def add(self, user_id, title):
         '''POST request to posts resource'''
         headers = {
