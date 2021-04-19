@@ -9,7 +9,7 @@ class User:
         print(f"Entrypoint: {entrypoint}")
 
     def get(self, user_id = None):
-        '''GET request to users resource'''
+        '''get specific user or all users'''
         # get all users of no post id defined
         if user_id:
             return requests.get(f"{self.entrypoint}/{user_id}")
@@ -18,7 +18,7 @@ class User:
             return requests.get(f"{self.entrypoint}")
 
     def add(self, name, username, email, address, phone, website, company):
-        '''POST request to users resource'''
+        '''add a user'''
         headers = {
             'Content-Type': 'application/json'
         }
@@ -38,7 +38,7 @@ class User:
         return response
 
     def replace(self, user_id, name, username, email, address, phone, website, company):
-        '''PUT request to a specified users resource'''
+        '''replace a user'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
@@ -59,7 +59,7 @@ class User:
 
 
     def modify(self, user_id, name= None, username = None, email = None, address = None, phone = None, website = None, company = None):
-        '''PATCH request to a specified users resource'''
+        '''modify a user'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
@@ -79,7 +79,7 @@ class User:
         return response
 
     def delete(self, user_id):
-        '''DELETE request to a specified post resource'''
+        '''delete a specific user'''
         response = requests.delete(f"{self.entrypoint}/{user_id}")
         response.raise_for_status()
 
