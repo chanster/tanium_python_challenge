@@ -48,6 +48,6 @@ print(data)
 # 6 delete record from step 3
 try:
     response = challenge.posts.delete(data[0])
-    print(f"Status: {response.status_code}\nX-Content-Type-Options: {response.headers['X-COntent-Type-Options']}")
+    print(f"Status: {response.status_code}\nX-Content-Type-Options: {response.headers['X-Content-Type-Options']}")
 except Exception as err:
     print(f"Error occurred: {err}")
