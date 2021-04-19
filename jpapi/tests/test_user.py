@@ -1,4 +1,4 @@
-#pylint: disable-msg=R0201
+#pylint: disable-msg=R0201,C0116
 
 '''imports for testing'''
 import pytest
@@ -81,6 +81,7 @@ mock_data = [
 
 class TestUser:
     '''Test cases for JSON Placement users api'''
+
     def test_get_all_users(self):
         with requests_mock.Mocker() as mock:
             mock.get(

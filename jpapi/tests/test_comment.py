@@ -1,4 +1,4 @@
-#pylint: disable-msg=R0201
+#pylint: disable-msg=R0201,C0116
 
 '''imports for testing'''
 import pytest
