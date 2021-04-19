@@ -9,11 +9,12 @@ class Album:
 
     def get(self, album_id = None):
         '''get all or single album'''
-        # get all posts of no post id defined
         if album_id:
+            # get all posts of no post id defined
             response = requests.get(f"{self.entrypoint}/{album_id}")
-        # get specific post id
+
         else:
+            # get specific post id
             response = requests.get(f"{self.entrypoint}")
 
         response.raise_for_status()
@@ -63,10 +64,16 @@ class Album:
             'Content-Type': 'application/json; charset=UTF-8'
         }
         content = {}
-        if user_id : content['userId'] =  user_id
-        if title :  content['title'] = title
+        if user_id:
+            content['userId'] =  user_id
+        if title:
+            content['title'] = title
 
-        response = requests.patch(f"{self.entrypoint}/{album_id}", json = content, headers = headers)
+        response = requests.patch(
+            f"{self.entrypoint}/{album_id}",
+            json = content,
+            headers = headers
+        )
         response.raise_for_status()
 
         return response

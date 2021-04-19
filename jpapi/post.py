@@ -10,14 +10,15 @@ class Post:
 
     def get(self, post_id = None):
         '''get specific post or all posts'''
-        # get specific post id
+
         if post_id:
+            # get specific post id
             response = requests.get(f"{self.entrypoint}/{post_id}")
-            response.raise_for_status()
-        # get all posts of no post id defined
         else:
+            # get all posts of no post id defined
             response = requests.get(f"{self.entrypoint}")
-            response.raise_for_status()
+
+        response.raise_for_status()
 
         return response
 
@@ -77,9 +78,12 @@ class Post:
         }
 
         content = {}
-        if user_id : content['userId'] =  user_id
-        if title :  content['title'] = title
-        if body : content['body'] = body
+        if user_id:
+            content['userId'] =  user_id
+        if title:
+            content['title'] = title
+        if body:
+            content['body'] = body
 
         response = requests.patch(
             f"{self.entrypoint}/{post_id}",
@@ -101,7 +105,8 @@ class Post:
     def filter(self, user_id = None):
         '''filter posts'''
         filters = {}
-        if user_id: filters['userId'] = user_id
+        if user_id:
+            filters['userId'] = user_id
 
         response = requests.get(f"{self.entrypoint}", params = urlencode(filters))
         response.raise_for_status()

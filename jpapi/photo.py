@@ -10,14 +10,14 @@ class Photo:
 
     def get(self, photo_id = None):
         '''get all or single photo resource'''
-        # get all photos if no photos id defined
         if photo_id:
+            # get all photos if no photos id defined
             response = requests.get(f"{self.entrypoint}/{photo_id}")
-            response.raise_for_status()
-        # get specific photo id
         else:
+            # get specific photo id
             response = requests.get(f"{self.entrypoint}")
-            response.raise_for_status()
+
+        response.raise_for_status()
 
         return response
 
@@ -62,12 +62,20 @@ class Photo:
             'Content-Type': 'application/json; charset=UTF-8'
         }
         content = {}
-        if album_id : content['albumId'] =  album_id
-        if title :  content['title'] = title
-        if url : content['body'] = url
-        if thumbnail : content['thumbnail'] = thumbnail
+        if album_id:
+            content['albumId'] =  album_id
+        if title:
+            content['title'] = title
+        if url:
+            content['body'] = url
+        if thumbnail:
+            content['thumbnail'] = thumbnail
 
-        response = requests.patch(f"{self.entrypoint}/{photo_id}", json = content, headers = headers)
+        response = requests.patch(
+            f"{self.entrypoint}/{photo_id}",
+            json = content,
+            headers = headers
+        )
         response.raise_for_status()
 
         return response
@@ -83,7 +91,8 @@ class Photo:
     def filter(self, album_id = None):
         '''fliter on photos'''
         filters = {}
-        if album_id : filters['albumId'] = album_id
+        if album_id:
+            filters['albumId'] = album_id
 
         response = requests.get(f"{self.entrypoint}", params = urlencode(filters))
         response.raise_for_status()

@@ -18,4 +18,4 @@ class Client:
         self.users = User(f"{self.entrypoint}")
 
     if "__name__" == "__main__":
-        print(f"Entrypoint: {entrypoint}")
+        print(f"Entrypoint: {self.entrypoint}")

@@ -91,13 +91,20 @@ class User:
         }
         content = {}
         # Add to content dict if args has values
-        if name : content['name'] =  name
-        if username : content['username'] = username
-        if email : content['email'] =  email
-        if address : content['address'] = address
-        if phone : content['phone'] = phone
-        if website : content['website'] = website
-        if company : content['company'] = company
+        if name:
+            content['name'] =  name
+        if username:
+            content['username'] = username
+        if email:
+            content['email'] =  email
+        if address:
+            content['address'] = address
+        if phone:
+            content['phone'] = phone
+        if website:
+            content['website'] = website
+        if company:
+            content['company'] = company
 
         response = requests.patch(f"{self.entrypoint}/{user_id}", json = content, headers = headers)
         response.raise_for_status()
@@ -114,9 +121,12 @@ class User:
     def filter(self, user_id, album_id = None, todo_id = None, post_id = None):
         '''filter a user's reources'''
         filters = {}
-        if album_id : filters['albumId'] = album_id
-        if todo_id : filters['todoId'] = todo_id
-        if post_id : filters['postId'] = post_id
+        if album_id:
+            filters['albumId'] = album_id
+        if todo_id:
+            filters['todoId'] = todo_id
+        if post_id:
+            filters['postId'] = post_id
 
         response = requests.get(f"{self.entrypoint}/{user_id}", params = urlencode(filters))
         response.raise_for_status()

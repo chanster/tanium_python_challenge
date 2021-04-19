@@ -10,11 +10,11 @@ class Comment:
 
     def get(self, comment_id = None):
         '''get all or single comment'''
-        # get all posts of no post id defined
         if comment_id:
+            # get all posts of no post id defined
             response = requests.get(f"{self.entrypoint}/{comment_id}")
-        # get specific post id
         else:
+            # get specific post id
             response = requests.get(f"{self.entrypoint}")
 
         response.raise_for_status()
@@ -50,7 +50,11 @@ class Comment:
             'body': body
         }
 
-        response = requests.put(f"{self.entrypoint}/{comment_id}", json = content, headers = headers)
+        response = requests.put(
+            f"{self.entrypoint}/{comment_id}",
+            json = content,
+            headers = headers
+        )
         response.raise_for_status()
 
         return response
@@ -61,10 +65,14 @@ class Comment:
             'Content-Type': 'application/json; charset=UTF-8'
         }
         content = {}
-        if post_id : content['postId'] =  post_id
-        if name :  content['name'] = name
-        if email : content['email'] = email
-        if body : content['body'] = body
+        if post_id:
+            content['postId'] =  post_id
+        if name:
+            content['name'] = name
+        if email:
+            content['email'] = email
+        if body:
+            content['body'] = body
 
         response = requests.patch(f"{self.entrypoint}/{comment_id}", json = content, headers = headers)
         response.raise_for_status()
@@ -81,10 +89,13 @@ class Comment:
     def filter(self, user_id = None, post_id = None, email = None):
         '''filter comments'''
         filters = {}
-        if post_id : filters['postId'] = post_id
-        if user_id : filters['userId'] = user_id
-        if email : filters['email'] = email
-        
+        if post_id:
+            filters['postId'] = post_id
+        if user_id:
+            filters['userId'] = user_id
+        if email:
+            filters['email'] = email
+
         response = requests.get(f"{self.entrypoint}", params = urlencode(filters))
         response.raise_for_status()
 

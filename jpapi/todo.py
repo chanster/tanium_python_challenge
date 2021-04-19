@@ -10,11 +10,11 @@ class Todo:
 
     def get(self, todo_id  = None):
         '''get all or specific todo'''
-        # get all todos of no post id defined
         if todo_id :
+            # get all todos of no post id defined
             response = requests.get(f"{self.entrypoint}/{todo_id}")
-        # get specific post id
         else:
+            # get specific post id
             response = requests.get(f"{self.entrypoint}")
 
         response.raise_for_status()
@@ -58,10 +58,13 @@ class Todo:
             'Content-Type': 'application/json; charset=UTF-8'
         }
         content = {}
-        if user_id:  content['userId'] = user_id
-        if title:  content['title'] = title
-        # modify if either True or False
-        if completed is not None: content['body'] = completed
+        if user_id:
+            content['userId'] = user_id
+        if title:
+            content['title'] = title
+        if completed is not None:
+            # modify if either True or False
+            content['body'] = completed
 
         response = requests.patch(f"{self.entrypoint}/{todo_id}", json = content, headers = headers)
         response.raise_for_status()
@@ -78,9 +81,11 @@ class Todo:
     def filter(self, user_id = None, completed = None):
         '''filter todos'''
         filters = {}
-        if user_id : filters['userId'] = user_id
-        # convert Boolean to lowercase string to match query
-        if completed != None : filters['completed'] = ''.format(completed).lower()
+        if user_id:
+            filters['userId'] = user_id
+        if completed is not None:
+            # convert Boolean to lowercase string to match query
+            filters['completed'] = ''.format(completed).lower()
 
         response = requests.get(f"{self.entrypoint}", params = urlencode(filters))
         response.raise_for_status()
