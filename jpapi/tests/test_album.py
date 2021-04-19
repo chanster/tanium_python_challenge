@@ -1,7 +1,10 @@
-from requests import exceptions as err
-from ..album import Album
+#pylint: disable-msg=R0201
+
+'''imports for testing'''
 import pytest
 import requests_mock
+from requests import exceptions as err
+from ..album import Album
 
 
 mock_data = [
@@ -28,27 +31,37 @@ mock_data = [
 ]
 
 class TestAlbum():
-
+    '''Test cases for JSON Placement albums api'''
     def test_get_all_albums(self):
         with requests_mock.Mocker() as mock:
-            mock.get('https://jsonplaceholder.typicode.com/albums', json = mock_data, status_code = 200)
+            mock.get(
+                'https://jsonplaceholder.typicode.com/albums',
+                json = mock_data,
+                status_code = 200
+            )
 
             response = Album('https://jsonplaceholder.typicode.com').get()
             assert response.json() == mock_data
             assert response.status_code == 200
 
-
     def test_get_single_album(self):
         with requests_mock.Mocker() as mock:
-            mock.get('https://jsonplaceholder.typicode.com/albums/1', json = mock_data[1], status_code = 200)
+            mock.get(
+                'https://jsonplaceholder.typicode.com/albums/1',
+                json = mock_data[1],
+                status_code = 200
+            )
 
             response = Album('https://jsonplaceholder.typicode.com').get(1)
             assert response.json() == mock_data[1]
             assert response.status_code == 200
-    
+
     def test_get_invalid_album(self):
         with requests_mock.Mocker() as mock:
-            mock.get('https://jsonplaceholder.typicode.com/albums/500', status_code = 404)
+            mock.get(
+                'https://jsonplaceholder.typicode.com/albums/500',
+                status_code = 404
+            )
 
             with pytest.raises(err.HTTPError):
                 response = Album('https://jsonplaceholder.typicode.com').get(500)
@@ -62,9 +75,10 @@ class TestAlbum():
                 status_code = 201
             )
 
-            response = Album('https://jsonplaceholder.typicode.com').add(1, 'Mock Title')
+            response = Album(
+                'https://jsonplaceholder.typicode.com').add(1, 'Mock Title')
             assert response.status_code == 201
-    
+
     def test_replace_album(self):
         with requests_mock.Mocker() as mock:
             mock.put(
@@ -73,9 +87,10 @@ class TestAlbum():
                 status_code = 200
             )
 
-            response = Album('https://jsonplaceholder.typicode.com').replace(1, 2, 'Mock Title')
+            response = Album('https://jsonplaceholder.typicode.com') \
+                .replace(1, 2, 'Mock Title')
             assert response.status_code == 200
-    
+
     def test_modify_album(self):
         with requests_mock.Mocker() as mock:
             mock.patch(
@@ -84,9 +99,10 @@ class TestAlbum():
                 status_code = 200
             )
 
-            response = Album('https://jsonplaceholder.typicode.com').modify(1, title = 'Mock Title')
+            response = Album('https://jsonplaceholder.typicode.com') \
+                .modify(1, title = 'Mock Title')
             assert response.status_code == 200
-    
+
     def test_delete_valid_album(self):
         with requests_mock.Mocker() as mock:
             mock.delete(

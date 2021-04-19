@@ -1,7 +1,10 @@
-from requests import exceptions as err
-from ..user import User
+#pylint: disable-msg=R0201
+
+'''imports for testing'''
 import pytest
 import requests_mock
+from requests import exceptions as err
+from ..user import User
 
 
 mock_data = [
@@ -77,23 +80,61 @@ mock_data = [
 ]
 
 class TestUser:
-
+    '''Test cases for JSON Placement users api'''
     def test_get_all_users(self):
         with requests_mock.Mocker() as mock:
-            mock.get('https://jsonplaceholder.typicode.com/users', json = mock_data, status_code = 200)
+            mock.get(
+                'https://jsonplaceholder.typicode.com/users',
+                json = mock_data,
+                status_code = 200
+            )
 
             response = User('https://jsonplaceholder.typicode.com').get()
             assert response.json() == mock_data
             assert response.status_code == 200
-    
+
     def test_get_single_user(self):
         with requests_mock.Mocker() as mock:
-            mock.get('https://jsonplaceholder.typicode.com/users/1', json = mock_data[1], status_code = 200)
+            mock.get(
+                'https://jsonplaceholder.typicode.com/users/1',
+                json = mock_data[1],
+                status_code = 200
+            )
 
             response = User('https://jsonplaceholder.typicode.com').get(1)
             assert response.json() == mock_data[1]
             assert response.status_code == 200
-    
+
+    def test_get_single_user_albums(self):
+        with requests_mock.Mocker() as mock:
+            mock.get(
+                'https://jsonplaceholder.typicode.com/users/1/albums',
+                status_code = 200
+            )
+
+            response = User('https://jsonplaceholder.typicode.com').get_albums(1)
+            assert response.status_code == 200
+
+    def test_get_single_user_todos(self):
+        with requests_mock.Mocker() as mock:
+            mock.get(
+                'https://jsonplaceholder.typicode.com/users/1/todos',
+                status_code = 200
+            )
+
+            response = User('https://jsonplaceholder.typicode.com').get_todos(1)
+            assert response.status_code == 200
+
+    def test_get_single_user_posts(self):
+        with requests_mock.Mocker() as mock:
+            mock.get(
+                'https://jsonplaceholder.typicode.com/users/1/posts',
+                status_code = 200
+            )
+
+            response = User('https://jsonplaceholder.typicode.com').get_posts(1)
+            assert response.status_code == 200
+
     def test_add_user(self):
         with requests_mock.Mocker() as mock:
             mock.post(
@@ -167,6 +208,7 @@ class TestUser:
                     'bs': 'Hahaha'
                 }
             }
+
             response = User('https://jsonplaceholder.typicode.com') \
                 .replace(2,
                     content['name'],
@@ -186,7 +228,7 @@ class TestUser:
                 headers = {'Content-Type': 'application/json'},
                 status_code = 200,
             )
-            
+
             content = {
                 'name': 'Zelda Dudette',
                 'username': 'zelda',
@@ -211,7 +253,7 @@ class TestUser:
                     company = content['company']
                 )
             assert response.status_code == 200
-    
+
     def test_delete_valid_user(self):
         with requests_mock.Mocker() as mock:
             mock.delete(
@@ -221,7 +263,7 @@ class TestUser:
 
             response = User('https://jsonplaceholder.typicode.com').delete(1)
             assert response.status_code == 200
-    
+
     def test_delete_invalid_user(self):
         with requests_mock.Mocker() as mock:
             mock.delete(

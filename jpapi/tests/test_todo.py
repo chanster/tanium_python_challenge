@@ -1,7 +1,10 @@
-from requests import exceptions as err
-from ..todo import Todo
+#pylint: disable-msg=R0201
+
+'''imports for testing'''
 import pytest
 import requests_mock
+from requests import exceptions as err
+from ..todo import Todo
 
 
 mock_data = [
@@ -44,23 +47,31 @@ mock_data = [
 ]
 
 class TestTodo():
-    
+    '''Test cases for JSON Placement todos api'''
     def test_get_all_todos(self):
         with requests_mock.Mocker() as mock:
-            mock.get('https://jsonplaceholder.typicode.com/todos', json = mock_data, status_code = 200)
+            mock.get(
+                'https://jsonplaceholder.typicode.com/todos',
+                json = mock_data,
+                status_code = 200
+            )
 
             response = Todo('https://jsonplaceholder.typicode.com').get()
             assert response.json() == mock_data
             assert response.status_code == 200
-    
+
     def test_get_single_todo(self):
         with requests_mock.Mocker() as mock:
-            mock.get('https://jsonplaceholder.typicode.com/todos/1', json = mock_data[1], status_code = 200)
+            mock.get(
+                'https://jsonplaceholder.typicode.com/todos/1',
+                json = mock_data[1],
+                status_code = 200
+            )
 
             response = Todo('https://jsonplaceholder.typicode.com').get(1)
             assert response.json() == mock_data[1]
             assert response.status_code == 200
-    
+
     def test_add_todo(self):
         with requests_mock.Mocker() as mock:
             mock.post(
@@ -72,7 +83,7 @@ class TestTodo():
             response = Todo('https://jsonplaceholder.typicode.com') \
                 .add(1, 'Mock todo')
             assert response.status_code == 201
-    
+
     def test_repalce_todo(self):
         with requests_mock.Mocker() as mock:
             mock.put(
@@ -96,7 +107,7 @@ class TestTodo():
             response = Todo('https://jsonplaceholder.typicode.com') \
                 .modify(1, completed = False)
             assert response.status_code == 200
-    
+
     def test_delete_valid_todo(self):
         with requests_mock.Mocker() as mock:
             mock.delete(

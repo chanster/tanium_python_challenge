@@ -1,13 +1,12 @@
+'''modules for api client'''
 from urllib.parse import urlencode
 import requests
 
+
 class User:
-    
+    '''Class for JSON Placement users resource'''
     def __init__(self, entrypoint):
         self.entrypoint = f"{entrypoint}/users"
-
-    if __name__ == "__main__":
-        print(f"Entrypoint: {entrypoint}")
 
     def get(self, user_id = None):
         '''get specific user or all users'''
@@ -28,14 +27,14 @@ class User:
         response.raise_for_status()
 
         return response
-    
+
     def get_todos(self, user_id):
         '''get todos of a specific user'''
         response = requests.get(f"{self.entrypoint}/{user_id}/todos")
         response.raise_for_status()
 
         return response
-    
+
     def get_posts(self, user_id):
         '''get posts of a specific user'''
         response = requests.get(f"{self.entrypoint}/{user_id}/posts")
@@ -46,7 +45,7 @@ class User:
     def add(self, name, username, email, address, phone, website, company):
         '''add a user'''
         headers = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json; charset=UTF-8'
         }
         content = {
             'name': name,
@@ -84,7 +83,8 @@ class User:
         return response
 
 
-    def modify(self, user_id, name= None, username = None, email = None, address = None, phone = None, website = None, company = None):
+    def modify(self, user_id, name= None, username = None, email = None,
+            address = None, phone = None, website = None, company = None):
         '''modify a user'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
@@ -117,7 +117,7 @@ class User:
         if album_id : filters['albumId'] = album_id
         if todo_id : filters['todoId'] = todo_id
         if post_id : filters['postId'] = post_id
-        
+
         response = requests.delete(f"{self.entrypoint}/{user_id}?{urlencode(filters)}")
         response.raise_for_status()
 

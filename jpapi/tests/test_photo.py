@@ -1,8 +1,10 @@
-from requests import exceptions as err
-from ..photo import Photo
+#pylint: disable-msg=R0201
+
+'''imports for testing'''
 import pytest
 import requests_mock
-
+from requests import exceptions as err
+from ..photo import Photo
 
 mock_data = [
     {
@@ -43,10 +45,14 @@ mock_data = [
 ]
 
 class TestPhoto():
-
+    '''Test cases for JSON Placement photos api'''
     def test_get_all_photos(self):
         with requests_mock.Mocker() as mock:
-            mock.get('https://jsonplaceholder.typicode.com/photos', json = mock_data, status_code = 200)
+            mock.get(
+                'https://jsonplaceholder.typicode.com/photos',
+                json = mock_data,
+                status_code = 200
+            )
 
             response = Photo('https://jsonplaceholder.typicode.com').get()
             assert response.json() == mock_data
@@ -54,7 +60,11 @@ class TestPhoto():
 
     def test_get_single_photo(self):
         with requests_mock.Mocker() as mock:
-            mock.get('https://jsonplaceholder.typicode.com/photos/1', json = mock_data[1], status_code = 200)
+            mock.get(
+                'https://jsonplaceholder.typicode.com/photos/1',
+                json = mock_data[1],
+                status_code = 200
+            )
 
             response = Photo('https://jsonplaceholder.typicode.com').get(1)
             assert response.json() == mock_data[1]
@@ -69,7 +79,12 @@ class TestPhoto():
             )
 
             response = Photo('https://jsonplaceholder.typicode.com') \
-                .add(2, 'Mock Title', 'http://mock/full/image.png', 'http://mock/thumbnail/image.png')
+                .add(
+                    2,
+                    'Mock Title',
+                    'http://mock/full/image.png',
+                    'http://mock/thumbnail/image.png'
+                )
             assert response.status_code == 201
 
     def test_replace_photo(self):
@@ -81,9 +96,15 @@ class TestPhoto():
             )
 
             response = Photo('https://jsonplaceholder.typicode.com') \
-                .replace(2, 3, 'Mock Title', 'http://mock/full/image.png', 'http://mock/thumbnail/image.png')
+                .replace(
+                    2,
+                    3,
+                    'Mock Title',
+                    'http://mock/full/image.png',
+                    'http://mock/thumbnail/image.png'
+                )
             assert response.status_code == 200
-    
+
     def test_modify_photo(self):
         with requests_mock.Mocker() as mock:
             mock.patch(
@@ -93,9 +114,13 @@ class TestPhoto():
             )
 
             response = Photo('https://jsonplaceholder.typicode.com') \
-                .modify(2, title = 'Mock Title', thumbnail = 'http://mock/thumbnail/image02.png')
+                .modify(
+                    2,
+                    title = 'Mock Title',
+                    thumbnail = 'http://mock/thumbnail/image02.png'
+                )
             assert response.status_code == 200
-    
+
     def test_delete_valid_photo(self):
         with requests_mock.Mocker() as mock:
             mock.delete(

@@ -1,13 +1,12 @@
+'''modules for api client'''
 from urllib.parse import urlencode
 import requests
 
+
 class Todo:
-    
+    '''Class for JSON Placement todos resource'''
     def __init__(self, entrypoint):
         self.entrypoint = f"{entrypoint}/todos"
-
-    if __name__ == "__main__":
-        print(f"Entrypoint: {entrypoint}")
 
     def get(self, todo_id  = None):
         '''GET request to todos resource'''
@@ -59,10 +58,10 @@ class Todo:
             'Content-Type': 'application/json; charset=UTF-8'
         }
         content = {}
-        if user_id :  content['userId'] = user_id
-        if title :  content['title'] = title
+        if user_id:  content['userId'] = user_id
+        if title:  content['title'] = title
         # modify if either True or False
-        if completed != None : content['body'] = completed
+        if completed is not None: content['body'] = completed
 
         response = requests.patch(f"{self.entrypoint}/{todo_id}", json = content, headers = headers)
         response.raise_for_status()
@@ -70,18 +69,19 @@ class Todo:
         return response
 
     def delete(self, todo_id ):
-        '''DELETE request to a specified post resource'''
+        '''delete a todo'''
         response = requests.delete(f"{self.entrypoint}/{todo_id}")
         response.raise_for_status()
 
         return response
 
     def filter(self, user_id = None, completed = None):
+        '''filter todos'''
         filters = {}
         if user_id : filters['userId'] = user_id
         # convert Boolean to lowercase string to match query
         if completed != None : filters['completed'] = ''.format(completed).lower()
-        
+
         response = requests.delete(f"{self.entrypoint}?{urlencode(filters)}")
         response.raise_for_status()
 

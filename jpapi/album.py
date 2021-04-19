@@ -1,34 +1,34 @@
+'''modules for api client'''
 import requests
 
+
 class Album:
-    
+    '''Class for JSON Placement albums resource'''
     def __init__(self, entrypoint):
         self.entrypoint = f"{entrypoint}/albums"
 
-    if __name__ == "__main__":
-        print(f"entrypoint: {entrypoint}/albums")
-
     def get(self, album_id = None):
-        '''GET request to posts resource'''
+        '''get all or single album'''
         # get all posts of no post id defined
         if album_id:
             response = requests.get(f"{self.entrypoint}/{album_id}")
         # get specific post id
         else:
             response = requests.get(f"{self.entrypoint}")
-        
+
         response.raise_for_status()
 
         return response
 
     def get_photos(self, album_id):
+        '''get photos of an albums'''
         response = requests.get(f"{self.entrypoint}/{album_id}/photos")
         response.raise_for_status()
 
         return response
 
     def add(self, user_id, title):
-        '''POST request to posts resource'''
+        '''add an album'''
         headers = {
             'Content-Type': 'application/json'
         }
@@ -43,7 +43,7 @@ class Album:
         return response
 
     def replace(self, album_id, user_id, title):
-        '''PUT request to a specified posts resource'''
+        '''replace an album'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
@@ -58,7 +58,7 @@ class Album:
         return response
 
     def modify(self, album_id, user_id = None, title = None):
-        '''PATCH request to a specified posts resource'''
+        '''modify an album'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
@@ -73,7 +73,7 @@ class Album:
 
 
     def delete(self, album_id):
-        '''DELETE request to a specified post resource'''
+        '''delete an album'''
         response = requests.delete(f"{self.entrypoint}/{album_id}")
         response.raise_for_status()
 

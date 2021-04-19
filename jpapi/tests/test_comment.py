@@ -1,7 +1,10 @@
-from requests import exceptions as err
-from ..comment import Comment
+#pylint: disable-msg=R0201
+
+'''imports for testing'''
 import pytest
 import requests_mock
+from requests import exceptions as err
+from ..comment import Comment
 
 
 mock_data = [
@@ -43,7 +46,7 @@ mock_data = [
 ]
 
 class TestComment():
-
+    '''Test cases for JSON PLacement comments api'''
     def test_get_all_comment(self):
         with requests_mock.Mocker() as mock:
             mock.get('https://jsonplaceholder.typicode.com/comments', json = mock_data, status_code = 200)
@@ -51,10 +54,14 @@ class TestComment():
             response = Comment('https://jsonplaceholder.typicode.com').get()
             assert response.json() == mock_data
             assert response.status_code == 200
-    
+
     def test_get_single_comment(self):
         with requests_mock.Mocker() as mock:
-            mock.get('https://jsonplaceholder.typicode.com/comments/1', json = mock_data[1], status_code = 200)
+            mock.get(
+                'https://jsonplaceholder.typicode.com/comments/1',
+                json = mock_data[1],
+                status_code = 200
+            )
 
             response = Comment('https://jsonplaceholder.typicode.com').get(1)
             assert response.json() == mock_data[1]
@@ -62,12 +69,15 @@ class TestComment():
 
     def test_get_invalid_comment(self):
         with requests_mock.Mocker() as mock:
-            mock.get('https://jsonplaceholder.typicode.com/comments/500', status_code = 404)
+            mock.get(
+                'https://jsonplaceholder.typicode.com/comments/500',
+                status_code = 404
+            )
 
             with pytest.raises(err.HTTPError):
                 response = Comment('https://jsonplaceholder.typicode.com').get(500)
                 assert response.status_code == 404
-    
+
     def test_add_comment(self):
         with requests_mock.Mocker() as mock:
             mock.post(
@@ -76,7 +86,14 @@ class TestComment():
                 status_code = 201
             )
 
-            response = Comment('https://jsonplaceholder.typicode.com').add(1, 'Mock Name', 'Mock Title', 'Mock body.')
+            response = Comment(
+                'https://jsonplaceholder.typicode.com') \
+                    .add(
+                        1,
+                        'Mock Name',
+                        'Mock Title',
+                        'Mock body.'
+                    )
             assert response.status_code == 201
 
     def test_replace_comment(self):

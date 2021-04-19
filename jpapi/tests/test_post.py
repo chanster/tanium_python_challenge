@@ -1,7 +1,10 @@
-from requests import exceptions as err
-from ..post import Post
+#pylint: disable-msg=R0201
+
+'''imports for testing'''
 import pytest
 import requests_mock
+from requests import exceptions as err
+from ..post import Post
 
 
 mock_data = [
@@ -38,10 +41,14 @@ mock_data = [
 ]
 
 class TestPost():
-
+    '''Test cases for JSON Placement posts api'''
     def test_get_all_posts(self):
         with requests_mock.Mocker() as mock:
-            mock.get('https://jsonplaceholder.typicode.com/posts', json = mock_data, status_code = 200)
+            mock.get(
+                'https://jsonplaceholder.typicode.com/posts',
+                json = mock_data,
+                status_code = 200
+            )
 
             response = Post('https://jsonplaceholder.typicode.com').get()
             assert response.json() == mock_data
@@ -49,7 +56,11 @@ class TestPost():
 
     def test_get_single_post(self):
         with requests_mock.Mocker() as mock:
-            mock.get('https://jsonplaceholder.typicode.com/posts/1', json = mock_data[1], status_code = 200)
+            mock.get(
+                'https://jsonplaceholder.typicode.com/posts/1',
+                json = mock_data[1],
+                status_code = 200
+            )
 
             response = Post('https://jsonplaceholder.typicode.com').get(1)
             assert response.json() == mock_data[1]
@@ -66,7 +77,7 @@ class TestPost():
             response = Post('https://jsonplaceholder.typicode.com') \
                 .add(2, 'Mock Title', 'Mock body.')
             assert response.status_code == 201
-    
+
     def test_replace_post(self):
         with requests_mock.Mocker() as mock:
             mock.put(

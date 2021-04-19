@@ -1,3 +1,4 @@
+'''modules'''
 from .client import Client
 
 __all__ = [

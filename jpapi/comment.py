@@ -1,29 +1,28 @@
+'''modules for api client'''
 from urllib.parse import urlencode
 import requests
 
+
 class Comment:
-    
+    '''Class for JSON Placement comments resource'''
     def __init__(self, entrypoint):
         self.entrypoint = f"{entrypoint}/comments"
 
-    if __name__ == "__main__":
-        print(f"Entrypoint: {entrypoint}")
-
     def get(self, comment_id = None):
-        '''GET request to posts resource'''
+        '''get all or single comment'''
         # get all posts of no post id defined
         if comment_id:
             response = requests.get(f"{self.entrypoint}/{comment_id}")
         # get specific post id
         else:
             response = requests.get(f"{self.entrypoint}")
-        
+
         response.raise_for_status()
 
         return response
 
     def add(self, post_id, name, email, body):
-        '''POST request to posts resource'''
+        '''add a comment to post'''
         headers = {
             'Content-Type': 'application/json'
         }
@@ -40,7 +39,7 @@ class Comment:
         return response
 
     def replace(self, comment_id, post_id, name, email, body):
-        '''PUT request to a specified posts resource'''
+        '''repalce a comment'''
         headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         }
@@ -65,7 +64,7 @@ class Comment:
         if post_id : content['postId'] =  post_id
         if name :  content['name'] = name
         if email : content['email'] = email
-        if body : content['body'] = body 
+        if body : content['body'] = body
 
         response = requests.patch(f"{self.entrypoint}/{comment_id}", json = content, headers = headers)
         response.raise_for_status()
@@ -73,13 +72,14 @@ class Comment:
         return response
 
     def delete(self, comment_id):
-        '''DELETE request to a specified post resource'''
+        '''delete a specific comment'''
         response = requests.delete(f"{self.entrypoint}/{comment_id}")
         response.raise_for_status()
 
         return response
 
     def filter(self, comment_id, user_id = None, post_id = None, email = None):
+        '''filter comments'''
         filters = {}
         if post_id : filters['postId'] = post_id
         if user_id : filters['userId'] = user_id
