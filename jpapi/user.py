@@ -21,6 +21,27 @@ class User:
 
         return response
 
+    def get_albums(self, user_id):
+        '''get albums of a specific user'''
+        response = requests.get(f"{self.entrypoint}/{user_id}/albums")
+        response.raise_for_status()
+
+        return response
+    
+    def get_todos(self, user_id):
+        '''get todos of a specific user'''
+        response = requests.get(f"{self.entrypoint}/{user_id}/todos")
+        response.raise_for_status()
+
+        return response
+    
+    def get_posts(self, user_id):
+        '''get posts of a specific user'''
+        response = requests.get(f"{self.entrypoint}/{user_id}/posts")
+        response.raise_for_status()
+
+        return response
+
     def add(self, name, username, email, address, phone, website, company):
         '''add a user'''
         headers = {
