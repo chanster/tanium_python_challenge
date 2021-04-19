@@ -12,10 +12,14 @@ class User:
         '''get specific user or all users'''
         # get all users of no post id defined
         if user_id:
-            return requests.get(f"{self.entrypoint}/{user_id}")
+            response = requests.get(f"{self.entrypoint}/{user_id}")
+            response.raise_for_status()
         # get specific post id
         else:
-            return requests.get(f"{self.entrypoint}")
+            response = requests.get(f"{self.entrypoint}")
+            response.raise_for_status()
+
+        return response
 
     def add(self, name, username, email, address, phone, website, company):
         '''add a user'''
