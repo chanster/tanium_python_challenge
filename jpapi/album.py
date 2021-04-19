@@ -78,7 +78,3 @@ class Album:
         response.raise_for_status()
 
         return response
-
-    def filter(self, filters):
-        pass
-    
