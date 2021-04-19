@@ -27,7 +27,10 @@ class Album:
             'userId': user_id
         }
 
-        return requests.post(self.entrypoint, json = content, headers = headers)
+        response = requests.post(self.entrypoint, json = content, headers = headers)
+        response.raise_for_status()
+
+        return response
 
     def replace(self, album_id, user_id, title):
         '''PUT request to a specified posts resource'''
@@ -39,8 +42,10 @@ class Album:
             'userId': user_id
         }
 
-        return requests.put(f"{self.entrypoint}/{album_id}", json = content, headers = headers)
+        response = requests.put(f"{self.entrypoint}/{album_id}", json = content, headers = headers)
+        response.raise_for_status()
 
+        return response
 
     def modify(self, album_id, user_id = None, title = None):
         '''PATCH request to a specified posts resource'''
@@ -51,12 +56,18 @@ class Album:
         if user_id : content['userId'] =  user_id
         if title :  content['title'] = title
 
-        return requests.patch(f"{self.entrypoint}/{album_id}", json = content, headers = headers)
+        response = requests.patch(f"{self.entrypoint}/{album_id}", json = content, headers = headers)
+        response.raise_for_status()
+
+        return response
 
 
     def delete(self, album_id):
         '''DELETE request to a specified post resource'''
-        return requests.delete(f"{self.entrypoint}/{album_id}")
+        response = requests.delete(f"{self.entrypoint}/{album_id}")
+        response.raise_for_status()
+
+        return response
 
     def filter(self, filters):
         pass
