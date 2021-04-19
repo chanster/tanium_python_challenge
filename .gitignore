@@ -4,11 +4,7 @@ __pycache__/
 *$py.class
 
 # virtualenv
-bin
-include
-lib
-lib64
-share
+.venv
 
 # vscode
 .vscode/*
