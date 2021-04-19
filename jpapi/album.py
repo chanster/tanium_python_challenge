@@ -12,10 +12,14 @@ class Album:
         '''GET request to posts resource'''
         # get all posts of no post id defined
         if album_id:
-            return requests.get(f"{self.entrypoint}/{album_id}")
+            response = requests.get(f"{self.entrypoint}/{album_id}")
         # get specific post id
         else:
-            return requests.get(f"{self.entrypoint}")
+            response = requests.get(f"{self.entrypoint}")
+        
+        response.raise_for_status()
+
+        return response
 
     def get_photos(self, album_id):
         response = requests.get(f"{self.entrypoint}/{album_id}/photos")
